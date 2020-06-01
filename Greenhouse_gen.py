@@ -223,9 +223,43 @@ def multiplySpans(box,num_spans):
   msgh = MultiSpanGH()  
   msgh.numSpans = num_spans
   msgh.box_list.append(box)
-  for i in range(num_spans):
+  for i in range(1,num_spans):
     msgh.add_box(translateBox(genGableGH(box.W,box.L,box.Hg,box.Hp),box.W*i))  
   return msgh
+
+def removeWalls(msgh):
+  for box1 in msgh.box_list:
+    for box2 in msgh.box_list:
+      if(box1 is not box2):
+        for facet1 in box1.facet_list:
+          for facet2 in box2.facet_list:
+            if(compareFacets(facet1,facet2)):
+              box1.facet_list.remove(facet1)
+              box2.facet_list.remove(facet2)
+def comparePoints(pt1,pt2):
+  if(pt1.x ==pt2.x and pt1.y ==pt2.y and pt1.z ==pt1.z ):
+    return 1
+  else: 
+    return 0   
+def compareFacets(facet1,facet2):
+  i = 0
+  for j in range(len(facet1.pt_list)):
+    for k in range(len(facet2.pt_list)):
+      i = i + comparePoints(facet1.pt_list[j],facet2.pt_list[k])
+  if(int(i/2)==len(facet1.pt_list) and int(i/2) == len(facet2.pt_list)):
+    return True
+  else:
+    return False
+         
+def countWalls(msgh): 
+  for box1 in msgh.box_list:
+    count = 0
+    for facet1 in box1.facet_list:
+      count = count+1
+    print(count)
+
+   
+
 def rotateMSGH(msgh, theta):
   for box in msgh.box_list:
     for fc in box.facet_list:
@@ -316,8 +350,8 @@ def plotSpanLines(msgh,W,L,H):
     MINX, MINY, MINZ, MAXX, MAXY, MAXZ= getMSGHBounds(msgh)    
     lb = min(MINX,MINY)
     ub = max(MAXX,MAXY)
-    ax.set_ylim(1.1*lb,ub*1.1)
-    ax.set_xlim(1.1*lb,ub*1.1)
+    ax.set_ylim(lb,ub*1.1)
+    ax.set_xlim(lb,ub*1.1)
     ax.set_zlim(0,MAXZ*2)
     ax.set_zticklabels([])
     ax.set_xticklabels([])

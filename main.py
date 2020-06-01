@@ -20,5 +20,9 @@ b3 = ghg.genGableGH(W,L,Hg,Hp)
 #ghg.plotBoxLines(b3,W,L,Hg)
 
 msgh = ghg.multiplySpans(b3,3)
-msgh = ghg.rotateMSGH(msgh,53.1)
+#msgh = ghg.rotateMSGH(msgh,53.1)
+ghg.removeWalls(msgh)
 ghg.plotSpanLines(msgh,W,L,Hg)
+
+ghg.countWalls(msgh)
+
