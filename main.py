@@ -7,8 +7,8 @@ Created on Sun May 31 17:08:36 2020
 import Greenhouse_gen as ghg
 
 
-W = 30  # width of structure
-L = 35  # length of structure
+W = 10  # width of structure
+L = 30  # length of structure
 Hg, Hp = 5,8 # Gutter height, peak height
 orientation = 45  # orientation of length relative to due north
 
@@ -19,9 +19,10 @@ b3 = ghg.genGableGH(W,L,Hg,Hp)
 #plotBoxPoints(rotateBox(b3,53.1),W,L,H)
 #ghg.plotBoxLines(b3,W,L,Hg)
 
-msgh = ghg.multiplySpans(b3,3)
-#msgh = ghg.rotateMSGH(msgh,53.1)
+msgh = ghg.multiplySpans(b3,5)
+
 ghg.removeWalls(msgh)
+#msgh = ghg.rotateMSGH(msgh,53.1)
 ghg.plotSpanLines(msgh,W,L,Hg)
 
 ghg.countWalls(msgh)

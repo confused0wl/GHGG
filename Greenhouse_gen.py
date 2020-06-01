@@ -358,6 +358,16 @@ def plotSpanLines(msgh,W,L,H):
     ax.set_yticklabels([])
 
 
-    
+#**************************************
+'''
+Planned functionality:
+  1. Export wall defs in IDF format
+  2. Build in a window definition into walls 
+  2. Generate structural components (framing) based on percentage
+  3. Add tables or ponds workflow
+  4. Export objects to Radiance formats
+  5. Context shading.   
+Add 
+    '''
 
     
