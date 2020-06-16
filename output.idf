@@ -1,0 +1,133 @@
+BuildingSurface:Detailed,
+     Face0
+     Wall
+     Typical Insulated Metal Building Wall R-14.49 5,
+     mainzone,
+     Outdoors,
+Object,
+     SunExposed,
+     WindExposed,
+     ,
+     ,
+      0.0 , 0.0 , 0
+      8.65 , 5.02 , 0
+      8.65 , 5.02 , 5
+      0.0 , 0.0 , 5
+BuildingSurface:Detailed,
+     Face1
+     Wall
+     Typical Insulated Metal Building Wall R-14.49 5,
+     mainzone,
+     Outdoors,
+Object,
+     SunExposed,
+     WindExposed,
+     ,
+     ,
+      -10.03 , 17.3 , 0
+      -1.38 , 22.32 , 0
+      -1.38 , 22.32 , 5
+      -10.03 , 17.3 , 5
+BuildingSurface:Detailed,
+     Face2
+     Floor
+     Typical Insulated Metal Building Wall R-14.49 5,
+     mainzone,
+     Ground,
+Object,
+     NoSun,
+     NoWind,
+     ,
+     ,
+      0.0 , 0.0 , 0
+      8.65 , 5.02 , 0
+      -1.38 , 22.32 , 0
+      -10.03 , 17.3 , 0
+BuildingSurface:Detailed,
+     Face3
+     Roof
+     Typical Insulated Metal Building Wall R-14.49 5,
+     mainzone,
+     Outdoors,
+Object,
+     SunExposed,
+     WindExposed,
+     ,
+     ,
+      0.0 , 0.0 , 5
+      -10.03 , 17.3 , 5
+      -5.7 , 19.81 , 8
+      4.33 , 2.51 , 8
+BuildingSurface:Detailed,
+     Face4
+     Roof
+     Typical Insulated Metal Building Wall R-14.49 5,
+     mainzone,
+     Outdoors,
+Object,
+     SunExposed,
+     WindExposed,
+     ,
+     ,
+      8.65 , 5.02 , 5
+      4.33 , 2.51 , 8
+      -5.7 , 19.81 , 8
+      -1.38 , 22.32 , 5
+BuildingSurface:Detailed,
+     Face5
+     Wall
+     Typical Insulated Metal Building Wall R-14.49 5,
+     mainzone,
+     Outdoors,
+Object,
+     SunExposed,
+     WindExposed,
+     ,
+     ,
+      0.0 , 0.0 , 0
+      -10.03 , 17.3 , 0
+      -10.03 , 17.3 , 5
+      0.0 , 0.0 , 5
+BuildingSurface:Detailed,
+     Face6
+     Wall
+     Typical Insulated Metal Building Wall R-14.49 5,
+     mainzone,
+     Outdoors,
+Object,
+     SunExposed,
+     WindExposed,
+     ,
+     ,
+      8.65 , 5.02 , 0
+      -1.38 , 22.32 , 0
+      -1.38 , 22.32 , 5
+      8.65 , 5.02 , 5
+BuildingSurface:Detailed,
+     Face7
+     Wall
+     Typical Insulated Metal Building Wall R-14.49 5,
+     mainzone,
+     Outdoors,
+Object,
+     SunExposed,
+     WindExposed,
+     ,
+     ,
+      0.0 , 0.0 , 5
+      8.65 , 5.02 , 5
+      4.33 , 2.51 , 8
+BuildingSurface:Detailed,
+     Face8
+     Wall
+     Typical Insulated Metal Building Wall R-14.49 5,
+     mainzone,
+     Outdoors,
+Object,
+     SunExposed,
+     WindExposed,
+     ,
+     ,
+      -10.03 , 17.3 , 5
+      -1.38 , 22.32 , 5
+      -5.7 , 19.81 , 8

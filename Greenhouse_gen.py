@@ -7,6 +7,7 @@ Created on Sat May 30 20:52:51 2020
 from mpl_toolkits.mplot3d import Axes3D  
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 
 class Vertex:
   # Basic class of point
@@ -20,6 +21,7 @@ class Facet:
   # for consistency
   def __init__(self):
     self.pt_list = []
+    self.surfaceType=None
   def add_vertex(self, vtx):
     self.pt_list.append(vtx)
   def add_list_vtxs(self,vtx_list):
@@ -130,6 +132,7 @@ def genGableGH(W,L,Hg,Hp):
   r1v3 = Vertex(W,0,Hg)
   r1v4 = Vertex(0,0,Hg)
   r1_list = [r1v1,r1v2,r1v3,r1v4]
+  R1.surfaceType='Wall'
   R1.add_list_vtxs(r1_list)
   
   R2 = Facet()
@@ -138,6 +141,7 @@ def genGableGH(W,L,Hg,Hp):
   r2v3 = Vertex(W,L,Hg)
   r2v4 = Vertex(0,L,Hg)
   r2_list = [r2v1,r2v2,r2v3,r2v4]
+  R2.surfaceType='Wall'
   R2.add_list_vtxs(r2_list)
   
   R3 = Facet()
@@ -146,6 +150,7 @@ def genGableGH(W,L,Hg,Hp):
   r3v3 = Vertex(W,L,0)
   r3v4 = Vertex(0,L,0)
   r3_list = [r3v1,r3v2,r3v3,r3v4]
+  R3.surfaceType='Floor'
   R3.add_list_vtxs(r3_list)
   
   R4a = Facet()
@@ -154,6 +159,7 @@ def genGableGH(W,L,Hg,Hp):
   r4av3 = Vertex(W/2,L,Hp)
   r4av4 = Vertex(W/2,0,Hp)
   r4a_list = [r4av1,r4av2,r4av3,r4av4]
+  R4a.surfaceType='Roof'
   R4a.add_list_vtxs(r4a_list)
   
   R4b = Facet()
@@ -162,6 +168,7 @@ def genGableGH(W,L,Hg,Hp):
   r4bv3 = Vertex(W/2,L,Hp)
   r4bv4 = Vertex(W,L,Hg)
   r4b_list = [r4bv1,r4bv2,r4bv3,r4bv4]
+  R4b.surfaceType='Roof'
   R4b.add_list_vtxs(r4b_list)  
   
   R5 = Facet()
@@ -170,6 +177,7 @@ def genGableGH(W,L,Hg,Hp):
   r5v3 = Vertex(0,L,Hg)
   r5v4 = Vertex(0,0,Hg)
   r5_list = [r5v1,r5v2,r5v3,r5v4]
+  R5.surfaceType='Wall'
   R5.add_list_vtxs(r5_list)
   
   R6 = Facet()
@@ -178,6 +186,7 @@ def genGableGH(W,L,Hg,Hp):
   r6v3 = Vertex(W,L,Hg)
   r6v4 = Vertex(W,0,Hg)
   r6_list = [r6v1,r6v2,r6v3,r6v4]
+  R6.surfaceType='Wall'
   R6.add_list_vtxs(r6_list)
   
   R7 = Facet()
@@ -185,6 +194,7 @@ def genGableGH(W,L,Hg,Hp):
   r7v2 = Vertex(W,0,Hg)
   r7v3 = Vertex(W/2,0,Hp)
   r7_list = [r7v1,r7v2,r7v3]
+  R7.surfaceType='Wall'
   R7.add_list_vtxs(r7_list)
 
   R8 = Facet()
@@ -192,6 +202,7 @@ def genGableGH(W,L,Hg,Hp):
   r8v2 = Vertex(W,L,Hg)
   r8v3 = Vertex(W/2,L,Hp)
   r8_list = [r8v1,r8v2,r8v3]
+  R8.surfaceType='Wall'
   R8.add_list_vtxs(r8_list)
   
   b1 = GH()
@@ -350,14 +361,70 @@ def plotSpanLines(msgh,W,L,H):
     MINX, MINY, MINZ, MAXX, MAXY, MAXZ= getMSGHBounds(msgh)    
     lb = min(MINX,MINY)
     ub = max(MAXX,MAXY)
-    ax.set_ylim(lb,ub*1.1)
-    ax.set_xlim(lb,ub*1.1)
+    ax.set_ylim(MINY,MAXY*1.1)
+    ax.set_xlim(MINX,MAXX*1.1)
     ax.set_zlim(0,MAXZ*2)
     ax.set_zticklabels([])
     ax.set_xticklabels([])
     ax.set_yticklabels([])
 
-
+def writeToIDF(msgh):
+  f = open("output.idf", "a")
+  tab='     '
+  face_num = 0
+  for bx in msgh.box_list:
+    for fc in bx.facet_list:
+      print('BuildingSurface:Detailed,',file=f)
+      print(tab+'Face'+ str(face_num),file=f)
+      print(tab+fc.surfaceType,file=f)
+      print(tab+'Typical Insulated Metal Building Wall R-14.49 5,',file=f)
+      print(tab+'mainzone,',file=f)
+      if(fc.surfaceType=='Floor'):
+        print(tab+'Ground,',file=f)     
+      else:
+        print(tab+'Outdoors,',file=f)
+      print('Object,',file=f)
+      if(fc.surfaceType=='Floor'):
+        print(tab+'NoSun,',file=f)
+        print(tab+'NoWind,',file=f)   
+      else:
+        print(tab+'SunExposed,',file=f)
+        print(tab+'WindExposed,',file=f)
+      print(tab+',',file=f)
+      print(tab+',',file=f)
+      for vtx in fc.pt_list:
+        print(tab, np.round(vtx.x,2),',',np.round(vtx.y,2),',',np.round(vtx.z,2),file=f)   
+      face_num = face_num+1
+  f.close()
+def printIDFdef(msgh):
+  tab='     '
+  face_num = 0
+  for bx in msgh.box_list:
+    for fc in bx.facet_list:
+      print('BuildingSurface:Detailed,')
+      print(tab+'Face'+ str(face_num))
+      print(tab+fc.surfaceType)
+      print(tab+'Typical Insulated Metal Building Wall R-14.49 5,')
+      print(tab+'mainzone,')
+      if(fc.surfaceType=='Floor'):
+        print(tab+'Ground,')     
+      else:
+        print(tab+'Outdoors,')
+      print('Object,')
+      if(fc.surfaceType=='Floor'):
+        print(tab+'NoSun,')
+        print(tab+'NoWind,')   
+      else:
+        print(tab+'SunExposed,')
+        print(tab+'WindExposed,')
+      print(tab+',')
+      print(tab+',')
+      for vtx in fc.pt_list:
+        print(tab, np.round(vtx.x,2),',',np.round(vtx.y,2),',',np.round(vtx.z,2))   
+      face_num = face_num+1
+        
+      
+  
 #**************************************
 '''
 Planned functionality:
